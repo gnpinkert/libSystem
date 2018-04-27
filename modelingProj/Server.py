@@ -154,7 +154,7 @@ class Server:
 		while i < len(books):
 			book = Book.PhysicalBook(books[i], books[i + 1], books[i+2], books[i+3], books[i+4],books[i+5],books[i+6],books[i+7],0)
 			bookObjects.append(book)
-			i = i + 9
+			i = i + 8
 
 	def loadEbook(self):
 		i = 0
@@ -166,7 +166,7 @@ class Server:
 		while i < len(books):
 			ebook = Book.eBook(books[i], books[i + 1], books[i+2], books[i+3], books[i+4],books[i+5],books[i+6],books[i+7],1)
 			ebookObjects.append(ebook)
-			i = i + 9
+			i = i + 8
 	def loadAdmin(self):
 		i = 0
 		admins = []

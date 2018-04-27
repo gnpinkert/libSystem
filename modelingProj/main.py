@@ -6,6 +6,8 @@ import Administrator
 import time
 import datetime
 
+
+server = Server.Server()
 def addBook():
 	
 	title = raw_input("Input title of the book: ")
@@ -41,17 +43,53 @@ def adminMenu(adminObj):
 		"\n\t\tAdd Employee (8) \n\t\tRemove Employee (9)\n\t\tAdd Administrator (10)\n\t\tRemove Administrator (11)\n\t\tLog Off (12)")
 	choice = int(input())
 	return choice
+
 def loginMenu():
 	print("Hello, Welcome to the Argonauts Library Management System!\n")
 	choice = int(raw_input("Press 1 to login or 2 to turn the system off\n"))
 	if choice == 1:
 		return True
 	return False
+
 def login():
 	username = raw_input("Username: ")
 	password = raw_input("\nPassword: ")
 	return username, password
 
+def searchBook():
+	titleIn = raw_input("Enter book title: ")
+	book, typeI = server.searchBook(titleIn)
+	print(book.toString())
+	if book == None:
+		print("Book does not exist in the system\n")
+	else:
+		book.toString()
+	server.addBook(book, book.getType())
+def checkoutBook():
+	titleIn = raw_input("Enter book title: ")
+	book, typeI = server.searchBook(titleIn)
+		if book == None:
+			print("Book does not exist in the system\n")
+		else:
+			var = book.decCopies()
+		if var == False:
+			print("No Copies left\n")
+		else:
+			#TODO: Need to add book to customer
+			print("Book successfully checked out!\n")
+	server.addBook(book, book.getType())
+
+def checkinBook():
+	customer.printBooks()
+	var = raw_input("Enter which book you would like to check back in (use the number", 
+		" use the number next to the book")
+	book = customer.removeBook(var)
+	book,asd = server.searchBook(book.getTitle())
+	if book == None:
+		print("Book does not exist")
+	else:
+		book.decCopies()
+		server.addBook(book)
 def main():
 	on = True
 	server = Server.Server()
@@ -68,35 +106,11 @@ def main():
 					if choice == 1:
 						user.toString()
 					if choice == 2:
-						titleIn = raw_input("Enter book title: ")
-						book, typeI = server.searchBook(titleIn)
-						print(book.toString())
-						if book == None:
-							print("Book does not exist in the system\n")
-						else:
-							book.toString()
-						server.addBook(book, book.getType())
+						searchBook()
 					if choice == 3:
-						titleIn = raw_input("Enter book title: ")
-						book, typeI = server.searchBook(titleIn)
-						if book == None:
-							print("Book does not exist in the system\n")
-						else:
-							var = book.decCopies()
-							if var == False:
-								print("No Copies left\n")
-							else:
-								#TODO: Need to add book to customer
-								print("Book successfully checked out!\n")
-						server.addBook(book, book.getType())
+						checkoutBook()
 					if choice == 4:
-						customer.printBooks()
-						var = raw_input("Enter which book you would like to check back in (use the number", 
-							" use the number next to the book")
-						book = customer.removeBook(var)
-						book = server.searchBook(book.getTitle())
-						book.decCopies()
-						server.addBook(book)
+						checkinBook()
 					if choice == 5:
 						loggedIn = False
 				server.addCustomer(user)
@@ -149,14 +163,7 @@ def main():
 					if choice == 12:
 						loggedIn = False
 					if choice == 7:
-						titleIn = raw_input("Enter book title: ")
-						book, typeI = server.searchBook(titleIn)
-						print(book.toString())
-						if book == None:
-							print("Book does not exist in the system\n")
-						else:
-							book.toString()
-						server.addBook(book, book.getType())
+						searchBook()
 					if choice == 8:
 						name = raw_input("Name of employee: ")
 						username = raw_input("\nUsername of employee: ")
@@ -233,14 +240,7 @@ def main():
 					if choice == 8:
 						loggedIn = False
 					if choice == 7:
-						titleIn = raw_input("Enter book title: ")
-						book, typeI = server.searchBook(titleIn)
-						print(book.toString())
-						if book == None:
-							print("Book does not exist in the system\n")
-						else:
-							book.toString()
-						server.addBook(book, book.getType())
+						searchBook()
 				server.addEmployee(user)
 	server.writeEverything()
 					

@@ -92,7 +92,7 @@ class PhysicalBook(Book):
 		return self.lastIssueDateTime
 
 	def toString(self):
-		return "Author: " + self.author + " Title: " + self.title "Copies Available: " + self.numberOfCopies
+		return ("Author: " + self.author + " Title: " + self.title + " Copies Available: " + str(self.numberOfCopies))
 	def getType(self):
 		return self.typeB
 
@@ -125,6 +125,6 @@ class eBook(Book):
 		return self.lastIssueDateTime
 
 	def toString(self):
-		return "(eBook) Author: " + self.author + " Title: " + self.title "Copies Available: " + self.numberOfCopies
+		return ("(eBook) Author: " + self.author + " Title: " + self.title + " Copies Available: " + str(self.numberOfCopies))
 	def getType(self):
 		return self.typeB
