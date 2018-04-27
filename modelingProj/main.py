@@ -13,7 +13,7 @@ def addBook():
 	subject = raw_input("Input subject: ")
 	isbn = raw_input("Input ISBN number: ")
 	date_added = time.strftime("%d/%m/%Y")
-	time_added = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+	time_added = datetime.datetime.now().strftime("%H:%M:%S")
 	numCopies = raw_input("Input number of copies: ")
 	which = int(raw_input("Enter 1 for eBook or 2 for a physical book: "))
 	

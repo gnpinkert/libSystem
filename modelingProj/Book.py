@@ -91,18 +91,8 @@ class PhysicalBook(Book):
 	def getLastIssueDate(self):
 		return self.lastIssueDateTime
 
-	def writeBook(self,file):
-		file.write(title)
-		file.write(author)
-		file.write(subjectArea)
-		file.write(ISBN_Number)
-		file.write(dateAdded)
-		file.write(numberOfCopies)
-		file.write(numberOfTimesIssued)
-		file.write(lastIssueDateTime)
-
 	def toString(self):
-		return "Author: %s, Title: %s, Copies Available: %s\n", (self.author, self.title, self.numberOfCopies)
+		return "Author: " + self.author + " Title: " + self.title "Copies Available: " + self.numberOfCopies
 	def getType(self):
 		return self.typeB
 
@@ -134,17 +124,7 @@ class eBook(Book):
 	def getLastIssueDate(self):
 		return self.lastIssueDateTime
 
-	def writeeBook(self, file):
-		file.write(title)
-		file.write(author)
-		file.write(subjectArea)
-		file.write(ISBN_Number)
-		file.write(dateAdded)
-		file.write(numberOfCopies)
-		file.write(numberOfTimesIssued)
-		file.write(lastIssueDateTime)
-
 	def toString(self):
-		return "(eBook) Author: %s, Title: %s, Copies Available: %s\n", (self.author, self.title, self.numberOfCopies)
+		return "(eBook) Author: " + self.author + " Title: " + self.title "Copies Available: " + self.numberOfCopies
 	def getType(self):
 		return self.typeB

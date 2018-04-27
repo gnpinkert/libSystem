@@ -71,12 +71,14 @@ class Server:
 				employeeObjects.remove(i)
 				return found,2
 		return None, None
+	
 	def searchEmployee(self, nameIn):
 		for i in employeeObjects:
 			if i.getName() == nameIn:
 				found = i
 				employeeObjects.remove(i)
 				return found
+	
 	def searchAdmin(self, nameIn):
 		for i in adminObjects:
 			if i.getName() == nameIn:
