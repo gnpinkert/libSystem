@@ -68,15 +68,15 @@ def searchBook():
 def checkoutBook():
 	titleIn = raw_input("Enter book title: ")
 	book, typeI = server.searchBook(titleIn)
-		if book == None:
-			print("Book does not exist in the system\n")
-		else:
-			var = book.decCopies()
-		if var == False:
-			print("No Copies left\n")
-		else:
-			#TODO: Need to add book to customer
-			print("Book successfully checked out!\n")
+	if book == None:
+		print("Book does not exist in the system\n")
+	else:
+		var = book.decCopies()
+	if var == False:
+		print("No Copies left\n")
+	else:
+		#TODO: Need to add book to customer
+		print("Book successfully checked out!\n")
 	server.addBook(book, book.getType())
 
 def checkinBook():
@@ -90,6 +90,75 @@ def checkinBook():
 	else:
 		book.decCopies()
 		server.addBook(book)
+
+def removeBook():
+	title = raw_input("Enter the title of the book you would like to remove")
+	book = server.searchBook(title)
+	if book == None:
+		print("Book does not exist!")
+	else:
+		print("Book successfully deleted!")
+def editBook():
+	title = raw_input("Enter the title of the book you wish to edit: ")
+	book, typeF = server.searchBook(title)
+	if book == None:
+		print("Book does not exist")
+	else:
+		print("Current Information:\n")
+		print(book.toString())
+		print("\nEnter new info:")
+		book,typeF = addBook()
+		server.addBook(book,typeF)
+def deleteCustomer():
+	title = raw_input("Enter name of customer to delete: ")
+	userI = server.searchCustomer(title)
+	if userI == None:
+		print("User does not exist!\n")
+	else:
+		print("Customer deleted from server!")
+
+def addCustomer():
+	name = raw_input("Name of customer: ")
+	username = raw_input("\nUsername of customer: ")
+	password = raw_input("\nPassword for customer: ")
+	cust = Customer.Customer(name, username, password)
+	server.addCustomer(cust)
+def viewCustomer():
+	name = raw_input("Name of customer to view: ")
+	cust = server.searchCustomer(name)
+	if cust == None:
+		print("Customer does not exist!\n")
+	else:
+		cust.toString()
+		server.addCustomer(cust)
+def addEmployee():
+	name = raw_input("Name of customer to view: ")
+	cust = server.searchCustomer(name)
+	if cust == None:
+		print("Customer does not exist!\n")
+	else:
+		cust.toString()
+		server.addCustomer(cust)
+def deleteEmployee():
+	title = raw_input("Enter name of employee to delete: ")
+	userI = server.searchEmployee(title)
+	if userI == None:
+		print("User does not exist!\n")
+	else:
+		print("User deleted from server!")
+def addAdmin():
+	name = raw_input("Name of admin: ")
+	username = raw_input("\nUsername of admin: ")
+	password = raw_input("\nPassword for admin: ")
+	employee = Administrator.Administrator(name, username, password)
+	server.addAdmin(employee)
+def deleteAdmin():
+	title = raw_input("Enter name of admin to delete: ")
+	userI = server.searchAdmin(title)
+	if userI == None:
+		print("Admin does not exist!\n")
+	else:
+		print("Admin deleted from server!")
 def main():
 	on = True
 	server = Server.Server()
@@ -122,74 +191,27 @@ def main():
 						server.addBook(book, typeasf)
 						print("Book Added!\n")
 					if choice == 2:
-						title = raw_input("Enter the title of the book you would like to remove")
-						book = server.searchBook(title)
-						if book == None:
-							print("Book does not exist!")
-						else:
-							print("Book successfully deleted!")
+						removeBook()
 					if choice == 3:
-						title = raw_input("Enter the title of the book you wish to edit: ")
-						book, typeF = server.searchBook(title)
-						if book == None:
-							print("Book does not exist")
-						else:
-							print("Current Information:\n")
-							print(book.toString())
-							print("\nEnter new info:")
-							book,typeF = addBook()
-							server.addBook(book,typeF)
+						editBook()
 					if choice == 5:
-						title = raw_input("Enter name of customer to delete: ")
-						userI = server.searchCustomer(title)
-						if userI == None:
-							print("User does not exist!\n")
-						else:
-							print("Customer deleted from server!")
+						deleteCustomer()
 					if choice == 6:
-						name = raw_input("Name of customer: ")
-						username = raw_input("\nUsername of customer: ")
-						password = raw_input("\nPassword for customer: ")
-						cust = Customer.Customer(name, username, password)
-						server.addCustomer(cust)
+						addCustomer()
 					if choice == 4:
-						name = raw_input("Name of customer to view: ")
-						cust = server.searchCustomer(name)
-						if cust == None:
-							print("Customer does not exist!\n")
-						else:
-							cust.toString()
-							server.addCustomer(cust)
+						viewCustomer()
 					if choice == 12:
 						loggedIn = False
 					if choice == 7:
 						searchBook()
 					if choice == 8:
-						name = raw_input("Name of employee: ")
-						username = raw_input("\nUsername of employee: ")
-						password = raw_input("\nPassword for employee: ")
-						employee = Employee.Employee(name, username, password)
-						server.addEmployee(employee)
+						addEmployee()
 					if choice == 9:
-						title = raw_input("Enter name of employee to delete: ")
-						userI = server.searchEmployee(title)
-						if userI == None:
-							print("User does not exist!\n")
-						else:
-							print("User deleted from server!")
+						deleteCustomer()
 					if choice == 10:
-						name = raw_input("Name of admin: ")
-						username = raw_input("\nUsername of admin: ")
-						password = raw_input("\nPassword for admin: ")
-						employee = Administrator.Administrator(name, username, password)
-						server.addAdmin(employee)
+						addAdmin()
 					if choice == 11:
-						title = raw_input("Enter name of admin to delete: ")
-						userI = server.searchAdmin(title)
-						if userI == None:
-							print("Admin does not exist!\n")
-						else:
-							print("Admin deleted from server!")
+						deleteAdmin()
 				server.addAdmin(user)
 			if typeIn == 2:
 				while(loggedIn):
@@ -199,44 +221,15 @@ def main():
 						server.addBook(book, book.getType())
 						print("Book Added!\n")
 					if choice == 2:
-						title = raw_input("Enter the tintle of the book you would like to remove")
-						book,afaf = server.searchBook(title)
-						if book == None:
-							print("Book does not exist!")
-						else:
-							print("Book successfully deleted!")
+						removeBook()
 					if choice == 3:
-						title = raw_input("Enter the title of the book you wish to edit: ")
-						book,typeF = server.searchBook(title)
-						if book == None:
-							print("Book does not exist")
-						else:
-							print("Current Information:\n")
-							print(book.toString())
-							print("\nEnter new info:")
-							book,typeF = addBook()
-							server.addBook(book,typeF)
+						editBook()
 					if choice == 5:
-						title = raw_input("Enter name of customer to delete: ")
-						user = server.searchCustomer(title)
-						if user == None:
-							print("User does not exist!\n")
-						else:
-							print("Customer deleted from server!")
+						deleteCustomer()
 					if choice == 6:
-						name = raw_input("Name of customer: ")
-						username = raw_input("\nUsername of customer: ")
-						password = raw_input("\nPassword for customer: ")
-						cust = Customer.Customer(name, username, password)
-						server.addCustomer(cust)
+						addCustomer()
 					if choice == 4:
-						name = raw_input("Name of customer to view: ")
-						cust = server.searchCustomer()
-						if cust == None:
-							print("Customer does not exist")
-						else:
-							cust.toString()
-							server.addCustomer(cust)
+						viewCustomer()
 					if choice == 8:
 						loggedIn = False
 					if choice == 7:
