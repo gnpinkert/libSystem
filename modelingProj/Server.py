@@ -37,6 +37,11 @@ class Server:
 		for i in customerObjects:
 			i.toString()
 
+	def searchIsbn(self, isbnIn):
+		for i in ebookObjects:
+			if i.getISBN == isbnIn:
+				return False
+		return True
 
 	def searchBook(self, titleIn):
 		for i in ebookObjects:
@@ -50,7 +55,7 @@ class Server:
 				bookObjects.remove(i)
 				return found, "Physical Book"
 		else:
-			return None
+			return None, None
 
 	def searchUser(self, usernameIn, passwordIn):
 		for i in customerObjects:
@@ -139,7 +144,6 @@ class Server:
 		while i < len(users):
 			user = Customer.Customer(users[i], users[i + 1], users[i + 2])
 			i = i + 3
-			user.toString()
 			customerObjects.append(user)
 		return customerObjects
 
@@ -175,9 +179,9 @@ class Server:
 			for line in mylist:
 				admins.append(line)
 		while i < len(admins):
-			admin = Administrator.Administrator(admins[i], admins[i + 1], admins[i + 2])
+			admin = Administrator.Administrator(admins[i], admins[i + 1], aadmins[i + 2])
 			adminObjects.append(admin)
-			i = i + 9
+			i = i + 3
 
 	def loadEmployee(self):
 		i = 0

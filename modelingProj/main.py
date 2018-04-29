@@ -18,13 +18,16 @@ def addBook():
 	time_added = datetime.datetime.now().strftime("%H:%M:%S")
 	numCopies = raw_input("Input number of copies: ")
 	which = int(raw_input("Enter 1 for eBook or 2 for a physical book: "))
-	
-	if(which == 2):
-		inputBook = Book.PhysicalBook(title, author, subject, isbn, date_added, numCopies, time_added, "Never checked Out", 0)
+	if server.searchIsbn(isbn):
+		if(which == 2):
+			inputBook = Book.PhysicalBook(title, author, subject, isbn, date_added, numCopies, time_added, "Never checked Out", 0)
+		else:
+			inputBook = Book.eBook(title, author, subject, isbn, date_added, numCopies, time_added, "Never checked Out",1)
+		print("Book Added!")
+		return inputBook,which
 	else:
-		inputBook = Book.eBook(title, author, subject, isbn, date_added, numCopies, time_added, "Never checked Out",1)
-
-	return inputBook,which
+		print("Duplicate ISBN number, cannot add")
+	return None, None
 
 def customerMenu(customerObj):
 	print("\n\nHello, " +   customerObj.getName() + "\n\n\tHere are your options:\n")
@@ -59,12 +62,11 @@ def login():
 def searchBook():
 	titleIn = raw_input("Enter book title: ")
 	book, typeI = server.searchBook(titleIn)
-	print(book.toString())
 	if book == None:
 		print("Book does not exist in the system\n")
 	else:
 		book.toString()
-	server.addBook(book, book.getType())
+		server.addBook(book, book.getType())
 def checkoutBook():
 	titleIn = raw_input("Enter book title: ")
 	book, typeI = server.searchBook(titleIn)
@@ -159,6 +161,8 @@ def deleteAdmin():
 		print("Admin does not exist!\n")
 	else:
 		print("Admin deleted from server!")
+
+
 def main():
 	on = True
 	server = Server.Server()
@@ -188,8 +192,8 @@ def main():
 					choice = adminMenu(user)
 					if choice == 1:
 						book,typeasf = addBook()
-						server.addBook(book, typeasf)
-						print("Book Added!\n")
+						if book != None:
+							server.addBook(book, typeasf)
 					if choice == 2:
 						removeBook()
 					if choice == 3:
@@ -218,8 +222,8 @@ def main():
 					choice = employeeMenu(user)
 					if choice == 1:
 						book,typeasf = addBook()
-						server.addBook(book, book.getType())
-						print("Book Added!\n")
+						if book != None:
+							server.addBook(book, book.getType())
 					if choice == 2:
 						removeBook()
 					if choice == 3:
