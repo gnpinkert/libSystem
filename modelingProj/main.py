@@ -1,3 +1,6 @@
+# coding: utf-8
+
+from __future__ import print_function
 import Server
 import Book
 import Customer
@@ -5,7 +8,8 @@ import Employee
 import Administrator
 import time
 import datetime
-
+from random import randint
+import sys
 
 server = Server.Server()
 def addBook():
@@ -43,10 +47,30 @@ def employeeMenu(employeeObj):
 def adminMenu(adminObj):
 	print("\n\nHello, " +   adminObj.getName() + "\n\n\tHere are your options:\n")
 	print("\t\tAdd Book (1)\n\t\tDelete Book (2)\n\t\tEdit Book (3)\n\t\tView Customer (4)\n\t\tDelete Customer (5)\n\t\tAdd Customer (6)\n\t\tView Book(7)" +
-		"\n\t\tAdd Employee (8) \n\t\tRemove Employee (9)\n\t\tAdd Administrator (10)\n\t\tRemove Administrator (11)\n\t\tLog Off (12)")
+		"\n\t\tAdd Employee (8) \n\t\tRemove Employee (9)\n\t\tAdd Administrator (10)\n\t\tRemove Administrator (11)\n\t\tLog Off (12)\n\t\tUpdate System (13)")
 	choice = int(input())
 	return choice
-
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end =	 '\r')
+    # Print New Line on Complete
+    if iteration == total: 
+        print()
+def updateSytem():
+	num = randint(0,10)
+	if(num < 3):
+		items = list(range(0,57))
+		l = len(items)
+		print("Update found, starting download process")
+		printProgressBar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+		for i, item in enumerate(items):
+			time.sleep(0.1)
+			printProgressBar(i+1, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+		print("Done!")
+	else:
+		print("No Update Found")
 def loginMenu():
 	print("Hello, Welcome to the Argonauts Library Management System!\n")
 	choice = int(raw_input("Press 1 to login or 2 to turn the system off\n"))
@@ -216,6 +240,8 @@ def main():
 						addAdmin()
 					if choice == 11:
 						deleteAdmin()
+					if choice == 13:
+						updateSytem()
 				server.addAdmin(user)
 			if typeIn == 2:
 				while(loggedIn):

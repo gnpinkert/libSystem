@@ -179,7 +179,7 @@ class Server:
 			for line in mylist:
 				admins.append(line)
 		while i < len(admins):
-			admin = Administrator.Administrator(admins[i], admins[i + 1], aadmins[i + 2])
+			admin = Administrator.Administrator(admins[i], admins[i + 1], admins[i + 2])
 			adminObjects.append(admin)
 			i = i + 3
 
