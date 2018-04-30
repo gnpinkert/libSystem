@@ -10,32 +10,20 @@ adminObjects = []
 employeeObjects = []
 allEmployees = []
 customerObjects = []
-
+name = None
 class Server:
 	
 	
 
-	def __init__(self):
+	def __init__(self, nameIn):
+		self.name = nameIn
+	def load(self):
 		self.loadCustomer()
 		self.loadBooks()
 		self.loadEbook()
 		self.loadAdmin()
 		self.loadEmployee()
-		allEmployees = adminObjects + employeeObjects
 
-	def everythingToString(self):
-		for i in bookObjects:
-			i.toString()
-		for i in userObjects:
-			i.toString()
-		for i in ebookObjects:
-			i.toString()
-		for i in adminObjects:
-			i.toString()
-		for i in employeeObjects:
-			i.toString()
-		for i in customerObjects:
-			i.toString()
 
 	def searchIsbn(self, isbnIn):
 		for i in ebookObjects:
@@ -67,7 +55,9 @@ class Server:
 		for i in adminObjects:
 			if i.getUserID() == usernameIn and i.password == passwordIn:
 				found = i
+				print("Length of admin objects before remove: " + str(len(adminObjects)))
 				adminObjects.remove(i)
+				print("Length of admin objects after remove: " + str(len(adminObjects)))
 				return found,1
 		
 		for i in employeeObjects:
@@ -141,9 +131,12 @@ class Server:
 			mylist = f.read().splitlines()
 			for line in mylist:
 				users.append(line)
+		if len(users) == 3:
+			users.append("")
 		while i < len(users):
-			user = Customer.Customer(users[i], users[i + 1], users[i + 2])
-			i = i + 3
+			booksout = users[i+3].split(",")
+			user = Customer.Customer(users[i], users[i + 1], users[i + 2], booksout)
+			i = i + 4
 			customerObjects.append(user)
 		return customerObjects
 
@@ -169,6 +162,7 @@ class Server:
 				books.append(line)
 		while i < len(books):
 			ebook = Book.eBook(books[i], books[i + 1], books[i+2], books[i+3], books[i+4],books[i+5],books[i+6],books[i+7],1)
+
 			ebookObjects.append(ebook)
 			i = i + 8
 	def loadAdmin(self):
@@ -178,6 +172,7 @@ class Server:
 			mylist = f.read().splitlines()
 			for line in mylist:
 				admins.append(line)
+		print("Length of admins before creating all objects: " + str(len(admins)))
 		while i < len(admins):
 			admin = Administrator.Administrator(admins[i], admins[i + 1], admins[i + 2])
 			adminObjects.append(admin)
@@ -192,12 +187,15 @@ class Server:
 			for line in mylist:
 				admins.append(line)
 		while i < len(admins):
+			
 			admin = Employee.Employee(admins[i], admins[i + 1], admins[i + 2])
 			employeeObjects.append(admin)
 			i = i + 3
 
 	def writeEmployee(self):
 		file = open("employee.txt", "w")
+		file.seek(0)
+		file.truncate()
 		for obj in employeeObjects:
 			file.write(obj.getName()+"\n")
 			file.write(obj.getUserID()+"\n")
@@ -206,13 +204,23 @@ class Server:
 
 	def writeCustomer(self):
 		file = open("customer.txt", "w")
+		file.seek(0)
+		file.truncate()
 		for obj in customerObjects:
 			file.write(obj.getName()+"\n")
 			file.write(obj.getUserID()+"\n")
 			file.write(obj.getPassword()+"\n")
+			for i in obj.booksOut:
+				file.write(i + ",")
+			file.write("\n")
 		file.close()
 
 	def writeAdmin(self):
+		file = open("admin.txt", "w")
+		file.seek(0)
+		file.truncate()
+		file.close()
+		print(len(adminObjects))
 		file = open("admin.txt", "w")
 		for obj in adminObjects:
 			file.write(obj.getName()+"\n")
@@ -221,6 +229,10 @@ class Server:
 		file.close()
 
 	def writeBook(self):
+		file = open("book.txt", "w")
+		file.seek(0)
+		file.truncate()
+		file.close()
 		file = open("book.txt", "w")
 		for obj in bookObjects:
 			file.write(obj.getTitle()+"\n")
@@ -235,6 +247,8 @@ class Server:
 
 	def writeEBook(self):
 		file = open("ebook.txt", "w")
+		file.seek(0)
+		file.truncate()
 		for obj in ebookObjects:
 			file.write(obj.getTitle()+"\n")
 			file.write(obj.getAuthor()+"\n")

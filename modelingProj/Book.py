@@ -93,6 +93,7 @@ class PhysicalBook(Book):
 
 	def toString(self):
 		return ("Author: " + self.author + " Title: " + self.title + " Copies Available: " + str(self.numberOfCopies))
+	
 	def getType(self):
 		return self.typeB
 

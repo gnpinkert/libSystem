@@ -11,7 +11,7 @@ import datetime
 from random import randint
 import sys
 
-server = Server.Server()
+server = Server.Server("grant")
 def addBook():
 	
 	title = raw_input("Input title of the book: ")
@@ -35,13 +35,13 @@ def addBook():
 
 def customerMenu(customerObj):
 	print("\n\nHello, " +   customerObj.getName() + "\n\n\tHere are your options:\n")
-	print("\t\tView Status (1)\n\t\tSearch Book Info (2)\n\t\tCheckout Book (3)\n\t\tReturn Book(4)\n\t\tCheckout (5)")
+	print("\t\tView Status (1)\n\t\tSearch Book Info (2)\n\t\tCheckout Book (3)\n\t\tReturn Book(4)\n\t\tEdit Account (5)\n\t\tView Books out (6)\n\t\tLogout (7)")
 	choice = int(raw_input())
 	return choice
 
 def employeeMenu(employeeObj):
 	print("\n\nHello, " +   employeeObj.getName() + "\n\n\tHere are your options:\n")
-	print("\t\tAdd Book (1)\n\t\tDelete Book (2)\n\t\tEdit Book (3)\n\t\tView Customer (4)\n\t\tDelete Customer (5)\n\t\tAdd Customer (6)\n\t\tView Book(7)\n\t\tLog Off (8)")
+	print("\t\tAdd Book (1)\n\t\tDelete Book (2)\n\t\tEdit Book (3)\n\t\tView Customer (4)\n\t\tDelete Customer (5)\n\t\tAdd Customer (6)\n\t\tView Book(7)\n\t\tLog Off (8)\n\t\tUpdate System (9)")
 	choice = int(input())
 	return choice
 def adminMenu(adminObj):
@@ -89,15 +89,16 @@ def searchBook():
 	if book == None:
 		print("Book does not exist in the system\n")
 	else:
-		book.toString()
+		print(book.toString())
 		server.addBook(book, book.getType())
-def checkoutBook():
+def checkoutBook(userIn):
 	titleIn = raw_input("Enter book title: ")
 	book, typeI = server.searchBook(titleIn)
 	if book == None:
 		print("Book does not exist in the system\n")
 	else:
 		var = book.decCopies()
+		userIn.checkOut(book)
 	if var == False:
 		print("No Copies left\n")
 	else:
@@ -118,7 +119,7 @@ def checkinBook():
 		server.addBook(book)
 
 def removeBook():
-	title = raw_input("Enter the title of the book you would like to remove")
+	title = raw_input("Enter the title of the book you would like to remove: ")
 	book = server.searchBook(title)
 	if book == None:
 		print("Book does not exist!")
@@ -149,6 +150,17 @@ def addCustomer():
 	password = raw_input("\nPassword for customer: ")
 	cust = Customer.Customer(name, username, password)
 	server.addCustomer(cust)
+
+def editAccount(nameIn):
+	if nameIn != None:
+		found = server.searchCustomer(nameIn)
+	else:
+		name = input("Name of account to edit: ")
+		found = server.searchCustomer(name)
+	print("Old Information:")
+	print(found.toString())
+	print("Input new Information: ")
+	addCustomer()
 def viewCustomer():
 	name = raw_input("Name of customer to view: ")
 	cust = server.searchCustomer(name)
@@ -186,10 +198,11 @@ def deleteAdmin():
 	else:
 		print("Admin deleted from server!")
 
-
+def viewBooks(user):
+	user.displayBooks()
 def main():
 	on = True
-	server = Server.Server()
+	server.load()
 	while (on):
 		on = loginMenu()
 		if on:
@@ -202,15 +215,19 @@ def main():
 					choice = customerMenu(user)
 					if choice == 1:
 						user.toString()
-					if choice == 2:
+					elif choice == 2:
 						searchBook()
-					if choice == 3:
-						checkoutBook()
-					if choice == 4:
+					elif choice == 3:
+						checkoutBook(user)
+					elif choice == 4:
 						checkinBook()
-					if choice == 5:
+					elif choice == 5:
+						editAccount(user.getName())
+					elif choice == 6:
+						viewBooks(user)
+					elif choice == 7:
 						loggedIn = False
-				server.addCustomer(user)
+						server.addCustomer(user)
 			if typeIn == 1:
 				while(loggedIn):
 					choice = adminMenu(user)
@@ -218,31 +235,32 @@ def main():
 						book,typeasf = addBook()
 						if book != None:
 							server.addBook(book, typeasf)
-					if choice == 2:
+					elif choice == 2:
 						removeBook()
-					if choice == 3:
+					elif choice == 3:
 						editBook()
-					if choice == 5:
+					elif choice == 5:
 						deleteCustomer()
-					if choice == 6:
+					elif choice == 6:
 						addCustomer()
-					if choice == 4:
+					elif choice == 4:
 						viewCustomer()
-					if choice == 12:
+					elif choice == 12:
 						loggedIn = False
-					if choice == 7:
+						server.addAdmin(user)
+					elif choice == 7:
 						searchBook()
-					if choice == 8:
+					elif choice == 8:
 						addEmployee()
-					if choice == 9:
+					elif choice == 9:
 						deleteCustomer()
-					if choice == 10:
+					elif choice == 10:
 						addAdmin()
-					if choice == 11:
+					elif choice == 11:
 						deleteAdmin()
-					if choice == 13:
+					elif choice == 13:
 						updateSytem()
-				server.addAdmin(user)
+				
 			if typeIn == 2:
 				while(loggedIn):
 					choice = employeeMenu(user)
@@ -250,21 +268,24 @@ def main():
 						book,typeasf = addBook()
 						if book != None:
 							server.addBook(book, book.getType())
-					if choice == 2:
+					elif choice == 2:
 						removeBook()
-					if choice == 3:
+					elif choice == 3:
 						editBook()
-					if choice == 5:
+					elif choice == 5:
 						deleteCustomer()
-					if choice == 6:
+					elif choice == 6:
 						addCustomer()
-					if choice == 4:
+					elif choice == 4:
 						viewCustomer()
-					if choice == 8:
+					elif choice == 8:
 						loggedIn = False
-					if choice == 7:
+						server.addEmployee(user)
+					elif choice == 7:
 						searchBook()
-				server.addEmployee(user)
+					elif choice == 9:
+						updateSytem()
+				
 	server.writeEverything()
 					
 

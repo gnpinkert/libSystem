@@ -5,11 +5,13 @@ class Customer:
     password = ""
     booksOut = []
 
-    def __init__(self, nameIn, userIDIn, passwordIn):
+    def __init__(self, nameIn, userIDIn, passwordIn, booksIn):
         self.name = nameIn
         self.userID = userIDIn
         self.password = passwordIn
         self.accountType = "Member"
+        for i in booksIn:
+            self.booksOut.append(i)
 
     def setName(self, nameIn):
         self.name = nameIn
@@ -36,11 +38,17 @@ class Customer:
         return self.password
 
     def checkOut(self, bookIn):
-        booksOut.append(bookIn)
-        return true
+        self.booksOut.append(bookIn.getTitle())
+        return True
+    def returnBook(self, titleIn):
+        self.booksOut.remove(titleIn)
+    def displayBooks(self):
+        print("Book Titles: ")
+        for i in self.booksOut:
+            print(i + ", ")
     
     def toString(self):
-        print(("(Customer) Name: {}, username: {}, password: {}").format(self.name, self.userID, self.password))
+        print("(Customer) Name: " + self.name + "username: " + self.userID + "password: " + self.password)
 
     def writeCustomer(self, file):
         file.write(name)
