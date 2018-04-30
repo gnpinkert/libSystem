@@ -180,7 +180,6 @@ class Server:
 
 	def loadEmployee(self):
 		i = 0
-		j = 0
 		admins = []
 		with open("employee.txt", "r") as f:
 			mylist = f.read().splitlines()
