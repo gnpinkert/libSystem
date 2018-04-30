@@ -9,6 +9,7 @@ class Employee:
         self.userID = userIDIn
         self.password = passwordIn
         for i in booksIn:
+            print(i)
             self.booksOut.append(i.rstrip())
 
     def setName(self, nameIn):

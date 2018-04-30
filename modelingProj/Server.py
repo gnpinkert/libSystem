@@ -30,18 +30,20 @@ class Server:
 			if i.getISBN == isbnIn:
 				return False
 		return True
+	def custRemove(self,cust):
+		customerObjects.remove(cust)
 
 	def searchBook(self, titleIn):
 		for i in ebookObjects:
 			if i.getTitle() == titleIn:
 				found = i
 				ebookObjects.remove(i)
-				return found, "EBook"
+				return found, 1
 		for i in bookObjects:
 			if i.getTitle() == titleIn:
 				found = i
 				bookObjects.remove(i)
-				return found, "Physical Book"
+				return found, 0
 		else:
 			return None, None
 
@@ -55,9 +57,7 @@ class Server:
 		for i in adminObjects:
 			if i.getUserID() == usernameIn and i.password == passwordIn:
 				found = i
-				print("Length of admin objects before remove: " + str(len(adminObjects)))
 				adminObjects.remove(i)
-				print("Length of admin objects after remove: " + str(len(adminObjects)))
 				return found,1
 		
 		for i in employeeObjects:
@@ -135,7 +135,8 @@ class Server:
 			users.append("")
 		while i < len(users):
 			booksout = users[i+3].split(",")
-			user = Customer.Customer(users[i], users[i + 1], users[i + 2], booksout)
+			user = Customer.Customer(users[i], users[i + 1], users[i + 2])
+			user.addBook(booksout)
 			i = i + 4
 			customerObjects.append(user)
 		return customerObjects
@@ -172,7 +173,6 @@ class Server:
 			mylist = f.read().splitlines()
 			for line in mylist:
 				admins.append(line)
-		print("Length of admins before creating all objects: " + str(len(admins)))
 		while i < len(admins):
 			admin = Administrator.Administrator(admins[i], admins[i + 1], admins[i + 2])
 			adminObjects.append(admin)
@@ -200,6 +200,7 @@ class Server:
 			file.write(obj.getName()+"\n")
 			file.write(obj.getUserID()+"\n")
 			file.write(obj.getPassword()+"\n")
+			
 			for i in obj.booksOut:
 				file.write(i + ",")
 			file.write("\n")
@@ -223,7 +224,6 @@ class Server:
 		file.seek(0)
 		file.truncate()
 		file.close()
-		print(len(adminObjects))
 		file = open("admin.txt", "w")
 		for obj in adminObjects:
 			file.write(obj.getName()+"\n")

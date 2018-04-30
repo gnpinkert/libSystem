@@ -1,18 +1,21 @@
+import time
 class Customer:
     name = ""
     userID = ""
     accountType = ""
     password = ""
     booksOut = []
+    count = 0
 
-    def __init__(self, nameIn, userIDIn, passwordIn, booksIn):
+    def __init__(self, nameIn, userIDIn, passwordIn):
         self.name = nameIn
         self.userID = userIDIn
         self.password = passwordIn
         self.accountType = "Member"
-        for i in booksIn:
-            self.booksOut.append(i)
 
+
+    def addBook(self, bookIn):
+        self.booksOut = bookIn
     def setName(self, nameIn):
         self.name = nameIn
     

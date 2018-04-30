@@ -113,17 +113,15 @@ def checkoutBook(userIn):
 	server.addBook(book, book.getType())
 
 def checkinBook(user):
-	user.printBooks()
-	var = raw_input("Enter which book you would like to check back in (use the number", 
-		" use the number next to the book")
-	book = customer.removeBook(var)
-	book,asd = server.searchBook(book.getTitle())	
+	user.displayBooks()
+	var = raw_input("Enter which book you would like to check back in (use the number next to the book: ")
+	book,asd = server.searchBook(var)	
 	if book == None:
 		print("Book does not exist")
 	else:
 		book.incCopies()
 		user.returnBook(book.getTitle())
-		server.addBook(book)
+		server.addBook(book, asd)
 
 def removeBook():
 	title = raw_input("Enter the title of the book you would like to remove: ")
@@ -152,11 +150,11 @@ def deleteCustomer():
 	else:
 		print("Customer deleted from server!")
 
-def addCustomer(booksIn):
+def addCustomer():
 	name = raw_input("Name of customer: ")
 	username = raw_input("\nUsername of customer: ")
 	password = raw_input("\nPassword for customer: ")
-	cust = Customer.Customer(name, username, password, booksIn)
+	cust = Customer.Customer(name, username, password)
 	server.addCustomer(cust)
 	return cust
 
@@ -168,10 +166,10 @@ def editAccount(user):
 		print("Old Information:")
 		print(user.toString())
 		print("Input new Information: ")
-		book = user.getBooks()
-		cust = addCustomer(book)
-		print("here")
-		server.customerObjects.remove(cust)
+		books = user.getBooks()
+		cust = addCustomer()
+		server.custRemove(cust)
+		cust.addBook(books)
 		return cust
 
 def viewCustomer():
@@ -257,9 +255,10 @@ def main():
 					elif choice == 3:
 						checkoutBook(user)
 					elif choice == 4:
-						checkinBook()
+						checkinBook(user)
 					elif choice == 5:
-						user = editAccount(user)
+						var = editAccount(user)
+						user = var	
 					elif choice == 6:
 						viewBooks(user)
 					elif choice == 9:
