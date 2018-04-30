@@ -22,7 +22,7 @@ def addBook():
 	time_added = datetime.datetime.now().strftime("%H:%M:%S")
 	numCopies = raw_input("Input number of copies: ")
 	which = int(raw_input("Enter 1 for eBook or 2 for a physical book: "))
-	if server.searchIsbn(isbn):
+	if (server.searchIsbn(isbn)):
 		if(which == 2):
 			inputBook = Book.PhysicalBook(title, author, subject, isbn, date_added, numCopies, time_added, "Never checked Out", 0)
 		else:
@@ -44,12 +44,14 @@ def employeeMenu(employeeObj):
 	print("\t\tAdd Book (1)\n\t\tDelete Book (2)\n\t\tEdit Book (3)\n\t\tView Customer (4)\n\t\tDelete Customer (5)\n\t\tAdd Customer (6)\n\t\tView Book(7)\n\t\tLog Off (8)\n\t\tUpdate System (9)")
 	choice = int(input())
 	return choice
+
 def adminMenu(adminObj):
 	print("\n\nHello, " +   adminObj.getName() + "\n\n\tHere are your options:\n")
 	print("\t\tAdd Book (1)\n\t\tDelete Book (2)\n\t\tEdit Book (3)\n\t\tView Customer (4)\n\t\tDelete Customer (5)\n\t\tAdd Customer (6)\n\t\tView Book(7)" +
 		"\n\t\tAdd Employee (8) \n\t\tRemove Employee (9)\n\t\tAdd Administrator (10)\n\t\tRemove Administrator (11)\n\t\tLog Off (12)\n\t\tUpdate System (13)")
 	choice = int(input())
 	return choice
+
 def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
@@ -58,6 +60,7 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
     # Print New Line on Complete
     if iteration == total: 
         print()
+
 def updateSytem():
 	num = randint(0,10)
 	if(num < 3):
@@ -71,6 +74,7 @@ def updateSytem():
 		print("Done!")
 	else:
 		print("No Update Found")
+
 def loginMenu():
 	print("Hello, Welcome to the Argonauts Library Management System!\n")
 	choice = int(raw_input("Press 1 to login or 2 to turn the system off\n"))
@@ -91,6 +95,7 @@ def searchBook():
 	else:
 		print(book.toString())
 		server.addBook(book, book.getType())
+
 def checkoutBook(userIn):
 	titleIn = raw_input("Enter book title: ")
 	book, typeI = server.searchBook(titleIn)
@@ -106,7 +111,7 @@ def checkoutBook(userIn):
 		print("Book successfully checked out!\n")
 	server.addBook(book, book.getType())
 
-def checkinBook():
+def checkinBook(user):
 	customer.printBooks()
 	var = raw_input("Enter which book you would like to check back in (use the number", 
 		" use the number next to the book")
@@ -115,7 +120,8 @@ def checkinBook():
 	if book == None:
 		print("Book does not exist")
 	else:
-		book.decCopies()
+		book.incCopies()
+		user.returnBook(book.getTitle())
 		server.addBook(book)
 
 def removeBook():
@@ -136,6 +142,7 @@ def editBook():
 		print("\nEnter new info:")
 		book,typeF = addBook()
 		server.addBook(book,typeF)
+
 def deleteCustomer():
 	title = raw_input("Enter name of customer to delete: ")
 	userI = server.searchCustomer(title)
@@ -154,14 +161,15 @@ def addCustomer():
 def editAccount(nameIn):
 	if nameIn != None:
 		found = server.searchCustomer(nameIn)
-	elif:
+	else:
 		name = input("Name of account to edit: ")
 		found = server.searchCustomer(name)
-	if found != None
+	if found != None:
 		print("Old Information:")
 		print(found.toString())
 		print("Input new Information: ")
 		addCustomer()
+
 def viewCustomer():
 	name = raw_input("Name of customer to view: ")
 	cust = server.searchCustomer(name)
@@ -170,6 +178,7 @@ def viewCustomer():
 	else:
 		cust.toString()
 		server.addCustomer(cust)
+
 def addEmployee():
 	name = raw_input("Name of customer to view: ")
 	cust = server.searchCustomer(name)
@@ -178,6 +187,7 @@ def addEmployee():
 	else:
 		cust.toString()
 		server.addCustomer(cust)
+
 def deleteEmployee():
 	title = raw_input("Enter name of employee to delete: ")
 	userI = server.searchEmployee(title)
@@ -185,12 +195,14 @@ def deleteEmployee():
 		print("User does not exist!\n")
 	else:
 		print("User deleted from server!")
+
 def addAdmin():
 	name = raw_input("Name of admin: ")
 	username = raw_input("\nUsername of admin: ")
 	password = raw_input("\nPassword for admin: ")
 	employee = Administrator.Administrator(name, username, password)
 	server.addAdmin(employee)
+
 def deleteAdmin():
 	title = raw_input("Enter name of admin to delete: ")
 	userI = server.searchAdmin(title)
@@ -201,6 +213,9 @@ def deleteAdmin():
 
 def viewBooks(user):
 	user.displayBooks()
+
+
+
 def main():
 	on = True
 	server.load()
