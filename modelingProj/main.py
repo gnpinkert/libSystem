@@ -303,7 +303,7 @@ def main():
 					elif choice == 8:
 						addEmployee()
 					elif choice == 9:
-						deleteCustomer()
+						deleteEmployee()
 					elif choice == 10:
 						addAdmin()
 					elif choice == 11:
