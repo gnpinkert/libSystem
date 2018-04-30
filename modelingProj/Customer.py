@@ -11,7 +11,7 @@ class Customer:
         self.password = passwordIn
         self.accountType = "Member"
         for i in booksIn:
-            self.booksOut.append(i)
+            self.booksOut.append(i.rstrip())
 
     def setName(self, nameIn):
         self.name = nameIn
@@ -42,13 +42,16 @@ class Customer:
         return True
     def returnBook(self, titleIn):
         self.booksOut.remove(titleIn)
+    
     def displayBooks(self):
         print("Book Titles: ")
+        string = ""
         for i in self.booksOut:
-            print(i + ", ")
+            string += (i + ", ")
+        print(string)
     
     def toString(self):
-        print("(Customer) Name: " + self.name + "username: " + self.userID + "password: " + self.password)
+        print("(Customer) Name: " + self.name + ", Account Type" + self.accountType + ", Username:  " + self.userID)
 
     def writeCustomer(self, file):
         file.write(name)

@@ -154,13 +154,14 @@ def addCustomer():
 def editAccount(nameIn):
 	if nameIn != None:
 		found = server.searchCustomer(nameIn)
-	else:
+	elif:
 		name = input("Name of account to edit: ")
 		found = server.searchCustomer(name)
-	print("Old Information:")
-	print(found.toString())
-	print("Input new Information: ")
-	addCustomer()
+	if found != None
+		print("Old Information:")
+		print(found.toString())
+		print("Input new Information: ")
+		addCustomer()
 def viewCustomer():
 	name = raw_input("Name of customer to view: ")
 	cust = server.searchCustomer(name)

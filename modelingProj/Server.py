@@ -187,10 +187,10 @@ class Server:
 			for line in mylist:
 				admins.append(line)
 		while i < len(admins):
-			
-			admin = Employee.Employee(admins[i], admins[i + 1], admins[i + 2])
+			booksout = admins[i+3].split(",")
+			admin = Employee.Employee(admins[i], admins[i + 1], admins[i + 2], booksout)
 			employeeObjects.append(admin)
-			i = i + 3
+			i = i + 4
 
 	def writeEmployee(self):
 		file = open("employee.txt", "w")

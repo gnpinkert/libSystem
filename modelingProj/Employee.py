@@ -2,11 +2,14 @@ class Employee:
     name = ""
     userID = ""
     password = ""
+    booksOut = []
 
-    def __init__(self, nameIn, userIDIn, passwordIn):
+    def __init__(self, nameIn, userIDIn, passwordIn, booksIn):
         self.name = nameIn
         self.userID = userIDIn
         self.password = passwordIn
+        for i in booksIn:
+            self.booksOut.append(i.rstrip())
 
     def setName(self, nameIn):
         self.name = nameIn
@@ -31,6 +34,16 @@ class Employee:
     
     def getPassword(self):
         return self.password
+
+    def returnBook(self, titleIn):
+        self.booksOut.remove(titleIn)
+    
+    def displayBooks(self):
+        print("Book Titles: ")
+        string = ""
+        for i in self.booksOut:
+            string += (i + ", ")
+        print(string)
     
     def toString(self):
         print(("(Employee) Name: {}, username: {}, password: {}").format(self.name, self.userID, self.password))
