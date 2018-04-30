@@ -11,7 +11,7 @@ class Customer:
         self.password = passwordIn
         self.accountType = "Member"
         for i in booksIn:
-            self.booksOut.append(i.rstrip())
+            self.booksOut.append(i)
 
     def setName(self, nameIn):
         self.name = nameIn
@@ -42,7 +42,8 @@ class Customer:
         return True
     def returnBook(self, titleIn):
         self.booksOut.remove(titleIn)
-    
+    def getBooks(self):
+        return self.booksOut
     def displayBooks(self):
         print("Book Titles: ")
         string = ""

@@ -200,6 +200,9 @@ class Server:
 			file.write(obj.getName()+"\n")
 			file.write(obj.getUserID()+"\n")
 			file.write(obj.getPassword()+"\n")
+			for i in obj.booksOut:
+				file.write(i + ",")
+			file.write("\n")
 		file.close()
 
 	def writeCustomer(self):

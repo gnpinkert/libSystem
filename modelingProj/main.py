@@ -152,24 +152,27 @@ def deleteCustomer():
 	else:
 		print("Customer deleted from server!")
 
-def addCustomer():
+def addCustomer(booksIn):
 	name = raw_input("Name of customer: ")
 	username = raw_input("\nUsername of customer: ")
 	password = raw_input("\nPassword for customer: ")
-	cust = Customer.Customer(name, username, password)
+	cust = Customer.Customer(name, username, password, booksIn)
 	server.addCustomer(cust)
+	return cust
 
-def editAccount(nameIn):
-	if nameIn != None:
-		found = server.searchCustomer(nameIn)
-	else:
+def editAccount(user):
+	if user == None:
 		name = input("Name of account to edit: ")
 		found = server.searchCustomer(name)
-	if found != None:
+	else:
 		print("Old Information:")
-		print(found.toString())
+		print(user.toString())
 		print("Input new Information: ")
-		addCustomer()
+		book = user.getBooks()
+		cust = addCustomer(book)
+		print("here")
+		server.customerObjects.remove(cust)
+		return cust
 
 def viewCustomer():
 	name = raw_input("Name of customer to view: ")
@@ -187,7 +190,7 @@ def addEmployee():
 		print("Customer does not exist!\n")
 	else:
 		cust.toString()
-		server.addCustomer(cust)
+		server.addCustomer(cust.getBooks())
 
 def deleteEmployee():
 	title = raw_input("Enter name of employee to delete: ")
@@ -256,7 +259,7 @@ def main():
 					elif choice == 4:
 						checkinBook()
 					elif choice == 5:
-						editAccount(user.getName())
+						user = editAccount(user)
 					elif choice == 6:
 						viewBooks(user)
 					elif choice == 9:
