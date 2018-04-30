@@ -37,20 +37,20 @@ def customerMenu(customerObj):
 	print("\n\nHello, " +   customerObj.getName() + "\n\n\tHere are your options:\n")
 	print("\t\tView Status (1)\n\t\tSearch Book Info (2)\n\t\tCheckout Book (3)\n\t\tReturn Book(4)\n\t\tEdit Account (5)\n\t\tView Books out (6)\n\t\tRenew Book (7)" +
 		"\n\t\tReserve Book (8)\n\t\tLog out (9)")
-	choice = int(raw_input())
+	choice = raw_input()
 	return choice
 
 def employeeMenu(employeeObj):
 	print("\n\nHello, " +   employeeObj.getName() + "\n\n\tHere are your options:\n")
 	print("\t\tAdd Book (1)\n\t\tDelete Book (2)\n\t\tEdit Book (3)\n\t\tView Customer (4)\n\t\tDelete Customer (5)\n\t\tAdd Customer (6)\n\t\tView Book(7)\n\t\tLog Off (8)\n\t\tUpdate System (9)")
-	choice = int(input())
+	choice = raw_input()
 	return choice
 
 def adminMenu(adminObj):
 	print("\n\nHello, " +   adminObj.getName() + "\n\n\tHere are your options:\n")
 	print("\t\tAdd Book (1)\n\t\tDelete Book (2)\n\t\tEdit Book (3)\n\t\tView Customer (4)\n\t\tDelete Customer (5)\n\t\tAdd Customer (6)\n\t\tView Book(7)" +
 		"\n\t\tAdd Employee (8) \n\t\tRemove Employee (9)\n\t\tAdd Administrator (10)\n\t\tRemove Administrator (11)\n\t\tLog Off (12)\n\t\tUpdate System (13)")
-	choice = int(input())
+	choice = raw_input()
 	return choice
 
 def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
@@ -182,13 +182,13 @@ def viewCustomer():
 		server.addCustomer(cust)
 
 def addEmployee():
-	name = raw_input("Name of customer to view: ")
-	cust = server.searchCustomer(name)
-	if cust == None:
-		print("Customer does not exist!\n")
-	else:
-		cust.toString()
-		server.addCustomer(cust.getBooks())
+	name = raw_input("Name of Employee: ")
+	username = raw_input("\nUsername of employee: ")
+	password = raw_input("\nPassword for employee: ")
+	empty = []
+	cust = Employee.Employee(name, username, password, empty)
+	server.addEmployee(cust)
+	return cust
 
 def deleteEmployee():
 	title = raw_input("Enter name of employee to delete: ")
@@ -248,6 +248,10 @@ def main():
 			if typeIn == 0:
 				while (loggedIn):
 					choice = customerMenu(user)
+					if choice.isalpha():
+						choice = 10
+					else:
+						choice = int(choice)
 					if choice == 1:
 						user.toString()
 					elif choice == 2:
@@ -268,9 +272,15 @@ def main():
 						renewBook(user)
 					elif choice == 8:
 						reserveBook()
+					else:
+						print("Invalid input")
 			if typeIn == 1:
 				while(loggedIn):
 					choice = adminMenu(user)
+					if choice.isalpha():
+						choice = 15
+					else:
+						choice = int(choice)
 					if choice == 1:
 						book,typeasf = addBook()
 						if book != None:
@@ -300,10 +310,16 @@ def main():
 						deleteAdmin()
 					elif choice == 13:
 						updateSytem()
+					else:
+						print("Invalid Input, try again")
 				
 			if typeIn == 2:
 				while(loggedIn):
 					choice = employeeMenu(user)
+					if choice.isalpha():
+						choice = 10
+					else:
+						choice = int(choice)
 					if choice == 1:
 						book,typeasf = addBook()
 						if book != None:
@@ -325,6 +341,8 @@ def main():
 						searchBook()
 					elif choice == 9:
 						updateSytem()
+					else:
+						print("Invalid Input, try again")
 				
 	server.writeEverything()
 					

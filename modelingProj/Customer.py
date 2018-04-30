@@ -55,7 +55,9 @@ class Customer:
         print(string)
     
     def toString(self):
-        print("(Customer) Name: " + self.name + ", Account Type" + self.accountType + ", Username:  " + self.userID)
+        print("(Customer) Name: " + self.name + ", Account Type: " + self.accountType + ", Username:  " + self.userID)
+        self.displayBooks()
+        print("Account Status: " + self.getAccountType())
 
     def writeCustomer(self, file):
         file.write(name)
