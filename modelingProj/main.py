@@ -36,7 +36,7 @@ def addBook():
 def customerMenu(customerObj):
 	print("\n\nHello, " +   customerObj.getName() + "\n\n\tHere are your options:\n")
 	print("\t\tView Status (1)\n\t\tSearch Book Info (2)\n\t\tCheckout Book (3)\n\t\tReturn Book(4)\n\t\tEdit Account (5)\n\t\tView Books out (6)\n\t\tRenew Book (7)" +
-		"Reserve Book (8)")
+		"\n\t\tReserve Book (8)\n\t\tLog out (9)")
 	choice = int(raw_input())
 	return choice
 
@@ -117,7 +117,7 @@ def checkinBook(user):
 	var = raw_input("Enter which book you would like to check back in (use the number", 
 		" use the number next to the book")
 	book = customer.removeBook(var)
-	book,asd = server.searchBook(book.getTitle())
+	book,asd = server.searchBook(book.getTitle())	
 	if book == None:
 		print("Book does not exist")
 	else:
@@ -214,7 +214,24 @@ def deleteAdmin():
 
 def viewBooks(user):
 	user.displayBooks()
-
+def renewBook(user):
+	count = 0
+	var = raw_input("Input Book Name: ")
+	for i in user.booksOut:
+		if var == i:
+			count = 1
+	if count != 1:
+		print("You don't have the book")
+	else:
+		print("Book renewed!")
+def reserveBook():
+	var = raw_input("Name of book: ")
+	book = server.searchBook(var)
+	if book[0] != None:
+		book[0].setReserved()
+		print("Book Reserved!")
+	else:
+		print("Book does not exist in the system!")
 
 
 def main():
@@ -242,9 +259,13 @@ def main():
 						editAccount(user.getName())
 					elif choice == 6:
 						viewBooks(user)
-					elif choice == 7:
+					elif choice == 9:
 						loggedIn = False
 						server.addCustomer(user)
+					elif choice == 7:
+						renewBook(user)
+					elif choice == 8:
+						reserveBook()
 			if typeIn == 1:
 				while(loggedIn):
 					choice = adminMenu(user)
