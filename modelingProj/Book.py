@@ -1,3 +1,5 @@
+import datetime
+
 class Book:
 	#local variables
 	title = "notSet"
@@ -6,6 +8,7 @@ class Book:
 	ISBN_Number = 0
 	dateAdded = "notSet"
 	numberOfCopies = 0
+	reserve = False
 
 	#Initializer
 	def __init__(self, titleIn, authorIn, subjectIn, ISBN_In, dateIn, copiesIn):
@@ -19,7 +22,10 @@ class Book:
 	#Setters
 	def setTitle(self, titleIn):
 		self.title = titleIn
-
+	def setReserved(self):
+		self.reserve = True
+	def setNotReserved(self):
+		self.reserve = False
 	def setAuthor(self, authorIn):
 		self.author = authorIn
 
@@ -48,6 +54,12 @@ class Book:
 
 	def getAuthor(self):
 		return self.author
+
+	def getReseveStatus(self):
+		if (reserve):
+			return "Reserved"
+		else:
+			return "Not Reserved"
 
 	def getSubject(self):
 		return self.subjectArea

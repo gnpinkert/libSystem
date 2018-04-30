@@ -35,7 +35,8 @@ def addBook():
 
 def customerMenu(customerObj):
 	print("\n\nHello, " +   customerObj.getName() + "\n\n\tHere are your options:\n")
-	print("\t\tView Status (1)\n\t\tSearch Book Info (2)\n\t\tCheckout Book (3)\n\t\tReturn Book(4)\n\t\tEdit Account (5)\n\t\tView Books out (6)\n\t\tLogout (7)")
+	print("\t\tView Status (1)\n\t\tSearch Book Info (2)\n\t\tCheckout Book (3)\n\t\tReturn Book(4)\n\t\tEdit Account (5)\n\t\tView Books out (6)\n\t\tRenew Book (7)" +
+		"Reserve Book (8)")
 	choice = int(raw_input())
 	return choice
 
@@ -112,7 +113,7 @@ def checkoutBook(userIn):
 	server.addBook(book, book.getType())
 
 def checkinBook(user):
-	customer.printBooks()
+	user.printBooks()
 	var = raw_input("Enter which book you would like to check back in (use the number", 
 		" use the number next to the book")
 	book = customer.removeBook(var)
